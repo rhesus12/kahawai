@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlantis – Listening Quiz</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    color: #111;
+    margin: 0;
+    padding: 20px;
+}
+.page {
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    box-sizing: border-box;
+}
+h1 { font-size: 28px; margin-top: 0; }
+h2 { font-size: 21px; margin-top: 28px; }
+.instructions {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.audio-box {
+    border: 1px solid #ccc;
+    padding: 18px;
+    background: #fafafa;
+    margin: 15px 0 25px;
+}
+audio {
+    width: 100%;
+    max-width: 600px;
+}
+.question {
+    margin: 20px 0;
+}
+select {
+    font-size: 16px;
+    padding: 7px;
+    margin-top: 8px;
+    min-width: 260px;
+}
+button {
+    font-size: 17px;
+    padding: 10px 22px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.correct { color: #176b2c; }
+.incorrect { color: #a00000; }
+.feedback {
+    margin-top: 6px;
+    font-weight: normal;
+    font-size: 15px;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>Atlantis – Listening Quiz</h1>
+
+<p class="instructions">
+<strong>Listen to the audio.</strong> You can listen more than once.
+Then choose the correct answer for each question.
+</p>
+
+<div class="audio-box">
+<strong>Listen:</strong><br><br>
+<audio controls src="atlantis.mp3"></audio>
+</div>
+
+<h2>Choose the correct answer</h2>
+
+<form id="quiz">
+
+<div class="question">
+<strong>1. Who wrote about Atlantis?</strong><br>
+<select name="q1">
+<option value="">Choose an answer</option>
+<option value="a">A Greek philosopher</option>
+<option value="b">A Roman emperor</option>
+<option value="c">A British explorer</option>
+</select>
+<div id="f1" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>2. How long ago did Plato write about Atlantis?</strong><br>
+<select name="q2">
+<option value="">Choose an answer</option>
+<option value="a">More than 2,000 years ago</option>
+<option value="b">About 200 years ago</option>
+<option value="c">About 20 years ago</option>
+</select>
+<div id="f2" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>3. What was Atlantis like?</strong><br>
+<select name="q3">
+<option value="">Choose an answer</option>
+<option value="a">Small and poor</option>
+<option value="b">Large, powerful and rich</option>
+<option value="c">Cold and empty</option>
+</select>
+<div id="f3" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>4. What happened to Atlantis?</strong><br>
+<select name="q4">
+<option value="">Choose an answer</option>
+<option value="a">It disappeared under the sea</option>
+<option value="b">It became part of Greece</option>
+<option value="c">It moved to another country</option>
+</select>
+<div id="f4" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>5. Has anyone proved that Atlantis really existed?</strong><br>
+<select name="q5">
+<option value="">Choose an answer</option>
+<option value="a">Yes, it has been proved</option>
+<option value="b">No, nobody has proved it</option>
+<option value="c">Plato proved it with maps</option>
+</select>
+<div id="f5" class="feedback"></div>
+</div>
+
+<button type="submit">Check my answers</button>
+</form>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+document.getElementById("quiz").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const answers = {
+        q1: "a",
+        q2: "a",
+        q3: "b",
+        q4: "a",
+        q5: "b"
+    };
+
+    const form = event.target;
+    const questions = Object.keys(answers);
+
+    // Do not mark until every question has been answered.
+    for (const q of questions) {
+        if (form.elements[q].value === "") {
+            const result = document.getElementById("result");
+            result.textContent = "Please answer all five questions before checking your answers.";
+            result.className = "incorrect";
+            form.elements[q].focus();
+            return;
+        }
+    }
+
+    let score = 0;
+
+    questions.forEach((q, index) => {
+        const feedback = document.getElementById("f" + (index + 1));
+
+        if (form.elements[q].value === answers[q]) {
+            score++;
+            feedback.textContent = "Correct";
+            feedback.className = "feedback correct";
+        } else {
+            feedback.textContent = "Incorrect";
+            feedback.className = "feedback incorrect";
+        }
+    });
+
+    const result = document.getElementById("result");
+    result.textContent = "Your score: " + score + " / 5";
+    result.className = score === 5 ? "correct" : "";
+});
+</script>
+
+</body>
+</html>
