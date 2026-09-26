@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Rise of AI – Listening Quiz</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    color: #111;
+    margin: 0;
+    padding: 20px;
+}
+.page {
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    box-sizing: border-box;
+}
+h1 { font-size: 28px; margin-top: 0; }
+h2 { font-size: 21px; margin-top: 28px; }
+.instructions {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.vocab-box {
+    border: 1px solid #ccc;
+    background: #fafafa;
+    padding: 15px 20px;
+    margin: 20px 0;
+}
+.vocab-box p {
+    margin: 8px 0;
+}
+.audio-box {
+    border: 1px solid #ccc;
+    padding: 18px;
+    background: #fafafa;
+    margin: 15px 0 25px;
+}
+audio {
+    width: 100%;
+    max-width: 600px;
+}
+.question {
+    margin: 20px 0;
+}
+select {
+    font-size: 16px;
+    padding: 7px;
+    margin-top: 8px;
+    min-width: 280px;
+}
+button {
+    font-size: 17px;
+    padding: 10px 22px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.correct { color: #176b2c; }
+.incorrect { color: #a00000; }
+.feedback {
+    margin-top: 6px;
+    font-weight: normal;
+    font-size: 15px;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>The Rise of Artificial Intelligence – Listening Quiz</h1>
+
+<p class="instructions">
+<strong>Listen to the audio.</strong> You can listen more than once.
+Then choose the correct answer for each question.
+</p>
+
+<div class="vocab-box">
+<strong>Vocabulary</strong>
+<p><strong>data</strong> – information stored on a computer</p>
+<p><strong>huge</strong> – very large</p>
+<p><strong>fake</strong> – not real</p>
+<p><strong>task</strong> – a job that you need to do</p>
+</div>
+
+<div class="audio-box">
+<strong>Listen:</strong><br><br>
+<audio controls src="rise.mp3"></audio>
+</div>
+
+<h2>Choose the correct answer</h2>
+
+<form id="quiz">
+
+<div class="question">
+<strong>1. What is AI?</strong><br>
+<select name="q1">
+<option value="">Choose an answer</option>
+<option value="a">Computer technology that can do some human-like tasks</option>
+<option value="b">A new type of robot used only in factories</option>
+<option value="c">A computer game for learning languages</option>
+</select>
+<div id="f1" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>2. Why has AI become much more powerful in recent years?</strong><br>
+<select name="q2">
+<option value="">Choose an answer</option>
+<option value="a">Computers can work with huge amounts of data</option>
+<option value="b">People have stopped using paper books</option>
+<option value="c">Robots have become cheaper to build</option>
+</select>
+<div id="f2" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>3. How can AI help teachers?</strong><br>
+<select name="q3">
+<option value="">Choose an answer</option>
+<option value="a">It can create exercises and learning materials</option>
+<option value="b">It can teach every class without a teacher</option>
+<option value="c">It can give every student a school computer</option>
+</select>
+<div id="f3" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>4. What might AI-powered robots do in the future?</strong><br>
+<select name="q4">
+<option value="">Choose an answer</option>
+<option value="a">Only clean people's homes</option>
+<option value="b">More jobs in factories, farms and hospitals</option>
+<option value="c">Replace all computers in offices</option>
+</select>
+<div id="f4" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>5. What is one danger of AI?</strong><br>
+<select name="q5">
+<option value="">Choose an answer</option>
+<option value="a">It can always give the correct information</option>
+<option value="b">It can make mistakes and give wrong information</option>
+<option value="c">It cannot work with large amounts of information</option>
+</select>
+<div id="f5" class="feedback"></div>
+</div>
+
+<div class="question">
+<strong>6. Why can fake AI pictures and videos be a problem?</strong><br>
+<select name="q6">
+<option value="">Choose an answer</option>
+<option value="a">They can make it difficult to know what is real</option>
+<option value="b">They always use too much computer data</option>
+<option value="c">They cannot be shared with other people</option>
+</select>
+<div id="f6" class="feedback"></div>
+</div>
+
+<button type="submit">Check my answers</button>
+</form>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+document.getElementById("quiz").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const answers = {
+        q1: "a",
+        q2: "a",
+        q3: "a",
+        q4: "b",
+        q5: "b",
+        q6: "a"
+    };
+
+    const form = event.target;
+    const questions = Object.keys(answers);
+    const result = document.getElementById("result");
+
+    for (const q of questions) {
+        if (form.elements[q].value === "") {
+            result.textContent = "Please answer all six questions before checking your answers.";
+            result.className = "incorrect";
+            form.elements[q].focus();
+            return;
+        }
+    }
+
+    let score = 0;
+
+    questions.forEach((q, index) => {
+        const feedback = document.getElementById("f" + (index + 1));
+
+        if (form.elements[q].value === answers[q]) {
+            score++;
+            feedback.textContent = "Correct";
+            feedback.className = "feedback correct";
+        } else {
+            feedback.textContent = "Incorrect";
+            feedback.className = "feedback incorrect";
+        }
+    });
+
+    result.textContent = "Your score: " + score + " / 6";
+    result.className = score === 6 ? "correct" : "";
+});
+</script>
+
+</body>
+</html>
