@@ -79,6 +79,37 @@ audio{width:100%}
   body{background:#fff}
   .page{max-width:none;margin:0;box-shadow:none}
 }
+
+.tooltip{
+  position:relative;
+  cursor:help;
+  border-bottom:1px dotted #666;
+}
+.tooltip::after{
+  content:attr(data-tip);
+  position:absolute;
+  left:50%;
+  bottom:calc(100% + 8px);
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:7px 10px;
+  border-radius:5px;
+  font-size:13px;
+  font-weight:normal;
+  line-height:1.3;
+  white-space:nowrap;
+  max-width:280px;
+  z-index:10;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .15s ease;
+  pointer-events:none;
+}
+.tooltip:hover::after{
+  opacity:1;
+  visibility:visible;
+}
 </style>
 </head>
 
@@ -109,32 +140,32 @@ audio{width:100%}
 
   <div class="reading">
     <div class="reading-text">
-      Five years ago, I <strong>came</strong> to New Zealand from Tonga to study.
-      I <strong>was</strong> a student at a college in Wellington.
-      I <strong>lived</strong> near my college and <strong>made</strong> some good friends.
-      We <strong>studied</strong> together and <strong>helped</strong> each other.
+      Five years ago, I <strong class="tooltip" data-tip="Past tense of come">came</strong> to New Zealand from Tonga to study.
+      I <strong class="tooltip" data-tip="Past tense of be">was</strong> a student at a college in Wellington.
+      I <strong class="tooltip" data-tip="Past tense of live">lived</strong> near my college and <strong class="tooltip" data-tip="Past tense of make">made</strong> some good friends.
+      We <strong class="tooltip" data-tip="Past tense of study">studied</strong> together and <strong class="tooltip" data-tip="Past tense of help">helped</strong> each other.
       <br><br>
-      Now I <strong>have</strong> a good group of friends. Every day, I
-      <strong>get up</strong> at seven o’clock. I <strong>have</strong> breakfast and
-      <strong>walk</strong> to college. I <strong>study</strong> in the morning and
-      <strong>have</strong> lunch with my friends. In the afternoon, I <strong>go</strong>
-      to the library or <strong>work</strong> on my assignments. In the evening, I
-      <strong>cook</strong> dinner and sometimes <strong>watch</strong> a film with my friends.
+      Now I <strong class="tooltip" data-tip="Present tense – verb">have</strong> a good group of friends. Every day, I
+      <strong class="tooltip" data-tip="Present tense – phrasal verb">get up</strong> at seven o’clock. I <strong class="tooltip" data-tip="Present tense – verb">have</strong> breakfast and
+      <strong class="tooltip" data-tip="Present tense – verb">walk</strong> to college. I <strong class="tooltip" data-tip="Present tense – verb">study</strong> in the morning and
+      <strong class="tooltip" data-tip="Present tense – verb">have</strong> lunch with my friends. In the afternoon, I <strong class="tooltip" data-tip="Present tense – verb">go</strong>
+      to the library or <strong class="tooltip" data-tip="Present tense – verb">work</strong> on my assignments. In the evening, I
+      <strong class="tooltip" data-tip="Present tense – verb">cook</strong> dinner and sometimes <strong class="tooltip" data-tip="Present tense – verb">watch</strong> a film with my friends.
       <br><br>
-      I <strong>can</strong> speak English well now, but I still <strong>work</strong> hard
-      to improve. I <strong>can</strong> understand my teachers and <strong>can</strong>
-      talk to people easily. I <strong>can’t</strong> always understand fast English.
+      I <strong class="tooltip" data-tip="Present tense – modal verb">can</strong> speak English well now, but I still <strong class="tooltip" data-tip="Present tense – verb">work</strong> hard
+      to improve. I <strong class="tooltip" data-tip="Present tense – modal verb">can</strong> understand my teachers and <strong class="tooltip" data-tip="Present tense – modal verb">can</strong>
+      talk to people easily. I <strong class="tooltip" data-tip="Present tense – modal verb, negative">can’t</strong> always understand fast English.
       <br><br>
-      I <strong>miss</strong> my family in Tonga. I <strong>have</strong> a mother,
-      father, two brothers and a sister. I <strong>call</strong> them every weekend.
-      My family <strong>is</strong> proud of me, and they always <strong>ask</strong>
+      I <strong class="tooltip" data-tip="Present tense – verb">miss</strong> my family in Tonga. I <strong class="tooltip" data-tip="Present tense – verb">have</strong> a mother,
+      father, two brothers and a sister. I <strong class="tooltip" data-tip="Present tense – verb">call</strong> them every weekend.
+      My family <strong class="tooltip" data-tip="Present tense – verb (be)">is</strong> proud of me, and they always <strong class="tooltip" data-tip="Present tense – verb">ask</strong>
       about my studies.
       <br><br>
-      Now I <strong>am</strong> close to finishing my course. I <strong>have</strong>
-      only a few assignments left. I <strong>feel</strong> excited about the future,
-      but I also <strong>feel</strong> sad because I <strong>will miss</strong> my friends
-      in New Zealand. I <strong>am going to visit Tonga in two months</strong>, and I
-      <strong>am</strong> really looking forward to seeing my family again.
+      Now I <strong class="tooltip" data-tip="Present tense – verb (be)">am</strong> close to finishing my course. I <strong class="tooltip" data-tip="Present tense – verb">have</strong>
+      only a few assignments left. I <strong class="tooltip" data-tip="Present tense – verb">feel</strong> excited about the future,
+      but I also <strong class="tooltip" data-tip="Present tense – verb">feel</strong> sad because I <strong class="tooltip" data-tip="Future tense – will + verb">will miss</strong> my friends
+      in New Zealand. I <strong class="tooltip" data-tip="Future tense – be going to + verb">am going to visit Tonga in two months</strong>, and I
+      <strong class="tooltip" data-tip="Present tense – verb (be)">am</strong> really looking forward to seeing my family again.
     </div>
   </div>
 </section>
@@ -158,29 +189,29 @@ audio{width:100%}
 
   <div class="reading">
     <div class="reading-text">
-      Two years ago, I <strong>left</strong> New Zealand and <strong>moved</strong>
-      to London for my first job. I <strong>was</strong> excited, but I <strong>was</strong>
-      also nervous. I <strong>had</strong> never lived overseas before. I <strong>found</strong>
+      Two years ago, I <strong class="tooltip" data-tip="Past tense of leave">left</strong> New Zealand and <strong class="tooltip" data-tip="Past tense of move">moved</strong>
+      to London for my first job. I <strong class="tooltip" data-tip="Past tense of be">was</strong> excited, but I <strong class="tooltip" data-tip="Past tense of be">was</strong>
+      also nervous. I <strong class="tooltip" data-tip="Past tense of have">had</strong> never lived overseas before. I <strong class="tooltip" data-tip="Past tense of find">found</strong>
       a small flat with two other young women.
       <br><br>
-      Now I <strong>have</strong> a full-time job in an office in central London.
-      Every morning, I <strong>get up</strong> at seven o’clock and <strong>have</strong>
-      breakfast. I <strong>walk</strong> to the train station and <strong>take</strong>
-      the train to work. I <strong>usually</strong> arrive at eight thirty. I <strong>work</strong>
-      with a friendly team, and we often <strong>have</strong> lunch together.
+      Now I <strong class="tooltip" data-tip="Present tense – verb">have</strong> a full-time job in an office in central London.
+      Every morning, I <strong class="tooltip" data-tip="Present tense – phrasal verb">get up</strong> at seven o’clock and <strong class="tooltip" data-tip="Present tense – verb">have</strong>
+      breakfast. I <strong class="tooltip" data-tip="Present tense – verb">walk</strong> to the train station and <strong>take</strong>
+      the train to work. I <strong class="tooltip" data-tip="Frequency adverb">usually</strong> arrive at eight thirty. I <strong class="tooltip" data-tip="Present tense – verb">work</strong>
+      with a friendly team, and we often <strong class="tooltip" data-tip="Present tense – verb">have</strong> lunch together.
       <br><br>
-      At first, I <strong>couldn’t</strong> understand everyone because they
-      <strong>spoke</strong> very quickly. Now I <strong>can</strong> understand my
-      colleagues much better. I <strong>can</strong> also use the computer systems at work,
-      but I <strong>can’t</strong> do everything yet.
+      At first, I <strong class="tooltip" data-tip="Past tense of can – negative">couldn’t</strong> understand everyone because they
+      <strong class="tooltip" data-tip="Past tense of speak">spoke</strong> very quickly. Now I <strong class="tooltip" data-tip="Present tense – modal verb">can</strong> understand my
+      colleagues much better. I <strong class="tooltip" data-tip="Present tense – modal verb">can</strong> also use the computer systems at work,
+      but I <strong class="tooltip" data-tip="Present tense – modal verb, negative">can’t</strong> do everything yet.
       <br><br>
-      After work, I <strong>sometimes</strong> meet my friends. We <strong>go</strong>
-      to a café or <strong>watch</strong> a film. At the weekend, I <strong>often</strong>
-      explore London. I <strong>like</strong> seeing new places, but I <strong>miss</strong>
+      After work, I <strong class="tooltip" data-tip="Frequency adverb">sometimes</strong> meet my friends. We <strong class="tooltip" data-tip="Present tense – verb">go</strong>
+      to a café or <strong class="tooltip" data-tip="Present tense – verb">watch</strong> a film. At the weekend, I <strong class="tooltip" data-tip="Frequency adverb">often</strong>
+      explore London. I <strong class="tooltip" data-tip="Present tense – verb">like</strong> seeing new places, but I <strong class="tooltip" data-tip="Present tense – verb">miss</strong>
       New Zealand and my family.
       <br><br>
-      I <strong>call</strong> my parents every Sunday. They <strong>have</strong> always
-      supported me. I <strong>am</strong> happy with my new life, and I <strong>hope</strong>
+      I <strong class="tooltip" data-tip="Present tense – verb">call</strong> my parents every Sunday. They <strong class="tooltip" data-tip="Present tense – verb">have</strong> always
+      supported me. I <strong class="tooltip" data-tip="Present tense – verb (be)">am</strong> happy with my new life, and I <strong class="tooltip" data-tip="Present tense – verb">hope</strong>
       to stay in London for another year.
     </div>
   </div>
@@ -189,4 +220,3 @@ audio{width:100%}
 </div>
 </body>
 </html>
-
