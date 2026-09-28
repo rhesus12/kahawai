@@ -221,6 +221,331 @@ audio{width:100%}
   </article>
 </section>
 
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 30px;
+        line-height: 1.6;
+        color: #222;
+        background: #fff;
+    }
+
+    h1 {
+        font-size: 38px;
+        margin-bottom: 5px;
+    }
+
+    h2 {
+        margin-top: 35px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid #ddd;
+        font-size: 27px;
+    }
+
+    .reading {
+        font-size: 20px;
+        line-height: 1.75;
+    }
+
+    .question {
+        margin: 25px 0;
+        padding: 18px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fafafa;
+    }
+
+    .question-text {
+        font-size: 19px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    select {
+        font-size: 17px;
+        padding: 9px 12px;
+        min-width: 280px;
+        border: 1px solid #999;
+        border-radius: 5px;
+        background: white;
+    }
+
+    select.correct {
+        border: 3px solid #2e8b57;
+        background: #e9f7ef;
+    }
+
+    select.incorrect {
+        border: 3px solid #d9534f;
+        background: #fdeaea;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 13px 28px;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background: #333;
+        color: white;
+    }
+
+    button:hover {
+        background: #555;
+    }
+
+    #result {
+        display: none;
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 8px;
+        background: #f1f1f1;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #feedback {
+        margin-top: 10px;
+        font-weight: normal;
+        font-size: 18px;
+    }
+
+    .mark {
+        margin-top: 8px;
+        font-size: 16px;
+        font-weight: normal;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Ali's House</h1>
+
+<h2>Reading</h2>
+
+<div class="reading">
+
+<p>
+This is Ali’s house. It is grey.
+The front door is black. The roof is black too.
+</p>
+
+<p>
+Ali’s house has a garage.
+It also has a lot of windows.
+Ali has a flower box in the front window.
+There are red flowers in the flower box.
+</p>
+
+<p>
+Ali’s front yard has a deck.
+There are two chairs and a table on the deck.
+There is also a white fence around the front yard.
+</p>
+
+<p>
+In Ali’s backyard, there is a swing set and a garden.
+There is a white fence around the backyard too.
+</p>
+
+</div>
+
+
+<h2>Comprehension</h2>
+
+<form id="quiz">
+
+    <!-- Question 1 -->
+    <div class="question">
+        <div class="question-text">
+            1. What colour is Ali’s house?
+        </div>
+
+        <select id="q1">
+            <option value="">Choose an answer...</option>
+            <option value="a">a) grey</option>
+            <option value="b">b) black</option>
+            <option value="c">c) red</option>
+        </select>
+
+        <div class="mark" id="m1"></div>
+    </div>
+
+
+    <!-- Question 2 -->
+    <div class="question">
+        <div class="question-text">
+            2. What colour is Ali’s door?
+        </div>
+
+        <select id="q2">
+            <option value="">Choose an answer...</option>
+            <option value="a">a) brown</option>
+            <option value="b">b) black</option>
+            <option value="c">c) grey</option>
+        </select>
+
+        <div class="mark" id="m2"></div>
+    </div>
+
+
+    <!-- Question 3 -->
+    <div class="question">
+        <div class="question-text">
+            3. Does Ali’s house have a garage?
+        </div>
+
+        <select id="q3">
+            <option value="">Choose an answer...</option>
+            <option value="a">a) yes</option>
+            <option value="b">b) no</option>
+        </select>
+
+        <div class="mark" id="m3"></div>
+    </div>
+
+
+    <!-- Question 4 -->
+    <div class="question">
+        <div class="question-text">
+            4. What colour are the flowers in the flower box?
+        </div>
+
+        <select id="q4">
+            <option value="">Choose an answer...</option>
+            <option value="a">a) pink</option>
+            <option value="b">b) yellow</option>
+            <option value="c">c) red</option>
+        </select>
+
+        <div class="mark" id="m4"></div>
+    </div>
+
+
+    <!-- Question 5 -->
+    <div class="question">
+        <div class="question-text">
+            5. What is on the deck?
+        </div>
+
+        <select id="q5">
+            <option value="">Choose an answer...</option>
+            <option value="a">a) red flowers</option>
+            <option value="b">b) two chairs and a table</option>
+            <option value="c">c) a garden</option>
+        </select>
+
+        <div class="mark" id="m5"></div>
+    </div>
+
+
+    <!-- Question 6 -->
+    <div class="question">
+        <div class="question-text">
+            6. Where is Ali’s garden?
+        </div>
+
+        <select id="q6">
+            <option value="">Choose an answer...</option>
+            <option value="a">a) in the front yard</option>
+            <option value="b">b) in the backyard</option>
+            <option value="c">c) in the house</option>
+        </select>
+
+        <div class="mark" id="m6"></div>
+    </div>
+
+
+    <button type="button" onclick="markQuiz()">Check answers</button>
+
+</form>
+
+
+<div id="result">
+    <div id="score"></div>
+    <div id="feedback"></div>
+</div>
+
+
+<script>
+
+function markQuiz() {
+
+    const answers = {
+        q1: "a",
+        q2: "b",
+        q3: "a",
+        q4: "c",
+        q5: "b",
+        q6: "b"
+    };
+
+    let score = 0;
+
+    for (let i = 1; i <= 6; i++) {
+
+        const question = document.getElementById("q" + i);
+        const mark = document.getElementById("m" + i);
+
+        question.classList.remove("correct", "incorrect");
+
+        if (question.value === answers["q" + i]) {
+
+            score++;
+            question.classList.add("correct");
+            mark.innerHTML = "✓ Correct — 1 mark";
+
+        } else {
+
+            question.classList.add("incorrect");
+
+            if (question.value === "") {
+                mark.innerHTML = "✗ No answer — 0 marks";
+            } else {
+                mark.innerHTML = "✗ Incorrect — 0 marks";
+            }
+        }
+    }
+
+    const percentage = Math.round((score / 6) * 100);
+
+    let feedback;
+
+    if (score === 6) {
+        feedback = "Excellent! You got all the answers correct.";
+    } else if (score >= 4) {
+        feedback = "Good work! Check the questions you got wrong.";
+    } else if (score >= 2) {
+        feedback = "Keep practising. Read the text again and try the questions.";
+    } else {
+        feedback = "Read the text again carefully and try the questions again.";
+    }
+
+    document.getElementById("score").innerHTML =
+        "Score: " + score + " / 6 (" + percentage + "%)";
+
+    document.getElementById("feedback").innerHTML =
+        feedback;
+
+    document.getElementById("result").style.display = "block";
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+    });
+}
+
+</script>
+
+
+  
 </main>
 </body>
 </html>
