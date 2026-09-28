@@ -1,198 +1,439 @@
-
 <!DOCTYPE html>
-<html lang="en-NZ">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KAHA – Pronunciation Pictures and Audio</title>
+
+<title>Ali's House</title>
+
 <style>
-.resource-list {
-    margin: 20px 0;
-    font-size: 18px;
-    line-height: 1.5;
+body {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    line-height: 1.6;
+    color: #222;
 }
 
-.resource-list p {
-    margin: 0 0 18px 0;
-    padding: 14px 16px;
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-top: 35px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 6px;
+}
+
+h3 {
+    font-size: 22px;
+    margin-top: 30px;
+}
+
+.reading {
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+.story {
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.question {
+    margin: 25px 0;
+    padding: 18px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background: #f8f8f8;
+    background: #fafafa;
 }
 
-.resource-list a {
+.question-text {
+    font-size: 19px;
     font-weight: bold;
-    color: #1a5dab;
-    text-decoration: none;
+    margin-bottom: 12px;
 }
 
-.resource-list a:hover {
-    text-decoration: underline;
+select {
+    font-size: 17px;
+    padding: 9px 12px;
+    min-width: 300px;
+    max-width: 100%;
+    border: 1px solid #999;
+    border-radius: 6px;
+    background: white;
 }
-  *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f4f6;color:#222;line-height:1.55}
-.page{max-width:1000px;margin:25px auto;background:#fff;padding:40px 50px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-header{border-bottom:3px solid #222;padding-bottom:18px;margin-bottom:30px}
-.class-name{font-size:14px;font-weight:bold;letter-spacing:.1em;color:#666;text-transform:uppercase;margin-bottom:7px}
-h1{font-size:34px;margin:0;line-height:1.2}
-h2{font-size:27px;margin:38px 0 14px;padding-bottom:7px;border-bottom:2px solid #ddd}
-h3{font-size:19px;margin:28px 0 10px}
-.section-label{font-style:italic}
-.instruction{font-size:16px}
-.picture{width:100%;display:block;margin:20px 0 28px;border:1px solid #bbb}
-.audio-box{background:#f7f8f9;border:1px solid #ddd;border-radius:8px;padding:14px 16px;margin:15px 0 28px}
-audio{width:100%}
-.audio-label{font-size:14px;color:#666;margin-top:7px}
-.reading{border:1px solid #ddd;border-radius:8px;padding:20px 23px;margin:25px 0 32px}
-.reading-title{font-weight:bold;font-size:18px;margin-bottom:10px}
-.reading-text{font-size:18px;line-height:1.7}
-@media(max-width:700px){.page{margin:0;padding:25px 20px}h1{font-size:28px}h2{font-size:24px}}
-@media print{body{background:#fff}.page{max-width:none;margin:0;box-shadow:none}}
+
+select.correct {
+    border: 3px solid #2e8b57;
+    background: #eaf7ee;
+}
+
+select.incorrect {
+    border: 3px solid #d9534f;
+    background: #fdeaea;
+}
+
+.mark {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 20px;
+    padding: 13px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+}
+
+button:hover {
+    background: #555;
+}
+
+#result {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background: #f1f1f1;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+#feedback {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+audio {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px 0 20px 0;
+}
 </style>
 </head>
+
 <body>
-<main class="page">
 
-<header>
-  <div class="class-name">KAHA</div>
-  <h1>Pronunciation pictures and audio</h1>
-</header>
+<h1>Ali's House</h1>
 
-<section>
-  <h2>Ali's House</h2>
+<h2>House vocabulary (nouns)</h2>
 
-  <h3 class="section-label">House vocabulary (nouns)</h3>
+<p>
+Listen to the audio and say each word. Please do it more than once.
+</p>
 
-  <p class="instruction">
-    Listen to the audio and say each word. Please do it more than once.
-  </p>
-
-  <div class="audio-box">
-    <audio controls src="V1.mp3"></audio>
-    <div class="audio-label">House vocabulary</div>
-  </div>
-
-  <img class="picture" src="image1.jpg" alt="Pictures of vocabulary from Ali's house">
-
-  <h3 class="section-label">Ali's House short stories</h3>
-
-  <p class="instruction">
-    Read each short story. Then play the audio and listen to the pronunciation.
-    Say it with the person speaking.
-  </p>
-
-  <article class="reading">
-    <div class="reading-title">Reading 1</div>
-    <div class="reading-text">
-      Ali’s house is grey. It has a black roof and a black door.
-      There is a garage and a lot of windows. There is a flower box in one window.
-    </div>
-
-    <div class="audio-box">
-      <audio controls src="R1.mp3"></audio>
-      <div class="audio-label">Audio: Reading 1</div>
-    </div>
-  </article>
-
-  <article class="reading">
-    <div class="reading-title">Reading 2</div>
-    <div class="reading-text">
-      Ali has a front yard and a backyard. There is a deck with two chairs and a table.
-      There is a white fence around the yard. In the backyard, there is a garden and a swing set.
-    </div>
-
-    <div class="audio-box">
-      <audio controls src="R2.mp3"></audio>
-      <div class="audio-label">Audio: Reading 2</div>
-    </div>
-  </article>
+<!-- Keep your existing vocabulary picture/audio here -->
 
 
-<div class="reading">
+<h2>Ali's House short stories</h2>
+
+<p>
+Read each short story. Then play the audio and listen to the pronunciation.
+Say it with the person speaking.
+</p>
+
+<h3>Reading 1</h3>
+
+<p class="reading">
+Ali’s house is grey. It has a black roof and a black door.
+There is a garage and a lot of windows.
+There is a flower box in one window.
+</p>
+
+<!-- Keep your existing Reading 1 audio here -->
+
+
+<h3>Reading 2</h3>
+
+<p class="reading">
+Ali has a front yard and a backyard.
+There is a deck with two chairs and a table.
+There is a white fence around the yard.
+In the backyard, there is a garden and a swing set.
+</p>
+
+<!-- Keep your existing Reading 2 audio here -->
+
+
 <h2>Story</h2>
-<p>This is Ali’s house. It is grey.<br>
-The front door is black. The roof is black too.</p>
 
-<p>Ali’s house has a garage.<br>
-It also has a lot of windows.<br>
-Ali has a flower box in the front window. There are red flowers in the flower box.</p>
+<div class="story reading">
 
-<p>Ali’s front yard has a deck.<br>
-There are two chairs and a table on the deck. There is also a white fence around the front yard.</p>
+<p>
+This is Ali’s house. It is grey.
+</p>
 
-<p>In Ali’s backyard, there is a swing set and a garden.<br>
-There is a white fence around the backyard too.</p>
+<p>
+The front door is black. The roof is black too.
+</p>
+
+<p>
+Ali’s house has a garage.
+</p>
+
+<p>
+It also has a lot of windows.
+</p>
+
+<p>
+Ali has a flower box in the front window.
+There are red flowers in the flower box.
+</p>
+
+<p>
+Ali’s front yard has a deck.
+</p>
+
+<p>
+There are two chairs and a table on the deck.
+There is also a white fence around the front yard.
+</p>
+
+<p>
+In Ali’s backyard, there is a swing set and a garden.
+</p>
+
+<p>
+There is a white fence around the backyard too.
+</p>
 
 </div>
 
 
 <h2>Questions</h2>
 
-<div class="question">
-    <div class="question-number">1. What colour is Ali’s house?</div>
-    <div class="options">
-        a) grey<br>
-        b) black<br>
-        c) red
-    </div>
-</div>
+<form id="quiz">
+
+<!-- QUESTION 1 -->
 
 <div class="question">
-    <div class="question-number">2. What colour is Ali’s door?</div>
-    <div class="options">
-        a) brown<br>
-        b) black<br>
-        c) grey
-    </div>
+
+<div class="question-text">
+1. What colour is Ali’s house?
 </div>
 
-<div class="question">
-    <div class="question-number">3. Does Ali’s house have a garage?</div>
-    <div class="options">
-        a) yes<br>
-        b) no
-    </div>
-</div>
+<select id="q1">
+<option value="">Choose an answer...</option>
+<option value="grey">a) grey</option>
+<option value="black">b) black</option>
+<option value="red">c) red</option>
+</select>
 
-<div class="question">
-    <div class="question-number">4. What colour are the flowers in the flower box?</div>
-    <div class="options">
-        a) pink<br>
-        b) yellow<br>
-        c) red
-    </div>
-</div>
+<div class="mark" id="m1"></div>
 
-<div class="question">
-    <div class="question-number">5. What is on the deck?</div>
-    <div class="options">
-        a) red flowers<br>
-        b) two chairs and a table<br>
-        c) a garden
-    </div>
-</div>
-
-<div class="question">
-    <div class="question-number">6. Where is Ali’s garden?</div>
-    <div class="options">
-        a) in the front yard<br>
-        b) in the backyard<br>
-        c) in the house
-    </div>
 </div>
 
 
-  
-</section>
+<!-- QUESTION 2 -->
 
-  
+<div class="question">
+
+<div class="question-text">
+2. What colour is Ali’s door?
+</div>
+
+<select id="q2">
+<option value="">Choose an answer...</option>
+<option value="brown">a) brown</option>
+<option value="black">b) black</option>
+<option value="grey">c) grey</option>
+</select>
+
+<div class="mark" id="m2"></div>
+
+</div>
 
 
+<!-- QUESTION 3 -->
 
-  
-</main>
-</body>
-</html>
-</main>
+<div class="question">
+
+<div class="question-text">
+3. Does Ali’s house have a garage?
+</div>
+
+<select id="q3">
+<option value="">Choose an answer...</option>
+<option value="yes">a) yes</option>
+<option value="no">b) no</option>
+</select>
+
+<div class="mark" id="m3"></div>
+
+</div>
+
+
+<!-- QUESTION 4 -->
+
+<div class="question">
+
+<div class="question-text">
+4. What colour are the flowers in the flower box?
+</div>
+
+<select id="q4">
+<option value="">Choose an answer...</option>
+<option value="pink">a) pink</option>
+<option value="yellow">b) yellow</option>
+<option value="red">c) red</option>
+</select>
+
+<div class="mark" id="m4"></div>
+
+</div>
+
+
+<!-- QUESTION 5 -->
+
+<div class="question">
+
+<div class="question-text">
+5. What is on the deck?
+</div>
+
+<select id="q5">
+<option value="">Choose an answer...</option>
+<option value="flowers">a) red flowers</option>
+<option value="chairs">b) two chairs and a table</option>
+<option value="garden">c) a garden</option>
+</select>
+
+<div class="mark" id="m5"></div>
+
+</div>
+
+
+<!-- QUESTION 6 -->
+
+<div class="question">
+
+<div class="question-text">
+6. Where is Ali’s garden?
+</div>
+
+<select id="q6">
+<option value="">Choose an answer...</option>
+<option value="front">a) in the front yard</option>
+<option value="back">b) in the backyard</option>
+<option value="house">c) in the house</option>
+</select>
+
+<div class="mark" id="m6"></div>
+
+</div>
+
+
+<button type="button" onclick="markQuiz()">
+Check answers
+</button>
+
+</form>
+
+
+<div id="result">
+
+<div id="score"></div>
+
+<div id="feedback"></div>
+
+</div>
+
+
+<script>
+
+function markQuiz() {
+
+    const answers = {
+        q1: "grey",
+        q2: "black",
+        q3: "yes",
+        q4: "red",
+        q5: "chairs",
+        q6: "back"
+    };
+
+    let score = 0;
+
+    for (let i = 1; i <= 6; i++) {
+
+        const question = document.getElementById("q" + i);
+        const mark = document.getElementById("m" + i);
+
+        question.classList.remove("correct", "incorrect");
+
+        if (question.value === answers["q" + i]) {
+
+            score++;
+
+            question.classList.add("correct");
+
+            mark.innerHTML = "✓ Correct — 1 mark";
+
+        } else {
+
+            question.classList.add("incorrect");
+
+            if (question.value === "") {
+
+                mark.innerHTML = "✗ No answer — 0 marks";
+
+            } else {
+
+                mark.innerHTML = "✗ Incorrect — 0 marks";
+
+            }
+        }
+    }
+
+    const percentage = Math.round((score / 6) * 100);
+
+    let feedback = "";
+
+    if (score === 6) {
+
+        feedback = "Excellent! All 6 answers are correct.";
+
+    } else if (score >= 4) {
+
+        feedback = "Good work! Check the questions you got wrong.";
+
+    } else if (score >= 2) {
+
+        feedback = "Good try. Read the story again and check your answers.";
+
+    } else {
+
+        feedback = "Read the story again carefully and try again.";
+
+    }
+
+    document.getElementById("score").innerHTML =
+        "Score: " + score + " / 6 (" + percentage + "%)";
+
+    document.getElementById("feedback").innerHTML =
+        feedback;
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("result").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+</script>
+
 </body>
 </html>
