@@ -14,8 +14,9 @@ Embedded word sources:
 <title>ESOL Scrabble Word Game</title>
 <style>
 body{font-family:Arial,sans-serif;max-width:760px;margin:30px auto;padding:0 16px;color:#172033}
-h1{font-size:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}
-#timer{font-size:28px;font-weight:bold}.score{font-weight:bold}
+h1{font-size:24px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.game-controls{display:flex;align-items:center;gap:8px;white-space:nowrap}
+#timer{font-size:28px;font-weight:bold;min-width:34px;text-align:center}.score{font-weight:bold}
 .rack,.tray{display:flex;flex-wrap:wrap;gap:5px;min-height:58px;align-items:center}
 .tile{width:40px;height:46px;background:#f5ead3;border:1px solid #c7cdd6;border-radius:7px;display:flex;align-items:center;justify-content:center;position:relative;font-size:22px;font-weight:bold;cursor:grab;user-select:none;flex:0 0 auto}
 .tile small{position:absolute;right:3px;bottom:2px;font-size:8px;color:#5b5142}
@@ -24,6 +25,8 @@ h1{font-size:24px}.top{display:flex;justify-content:space-between;align-items:ce
 @media (max-width:480px){
   body{margin:16px auto;padding:0 10px}
   h1{font-size:21px}
+  .top{flex-direction:column;gap:8px}
+  .game-controls{width:100%;justify-content:flex-start}
   .rack,.tray{gap:3px;min-height:50px}
   .tile{width:32px;height:38px;border-radius:6px;font-size:18px}
   .tray .tile{width:30px;height:36px;font-size:17px}
@@ -41,10 +44,9 @@ button{padding:10px 16px;min-height:44px;border-radius:8px;border:1px solid #ccd
 .final strong{font-size:32px}.lost-points{font-size:18px;font-weight:bold;margin-bottom:10px}.final-score-box{display:inline-block;padding:8px 24px;border:2px solid #222;border-radius:8px;background:#fff}
 [hidden]{display:none}
 
-.time-label { font-weight: 600; margin-left: 6px; }
-#timeSelect { padding: 4px 7px; border-radius: 6px; font-size: 1rem; }
+#timeSelect { padding: 7px 9px; border-radius: 7px; font-size: 1rem; }
 
-#goBtn { margin-left: 5px; padding: 5px 12px; font-weight: 600; }
+#goBtn { margin-left: 0; padding: 7px 14px; font-weight: 600; }
 
 #skipBtn { margin-left: 5px; padding: 5px 12px; background:#f59e0b; color:white; border-color:#d97706; }
 #skipBtn:hover { background:#d97706; }
@@ -57,7 +59,15 @@ button{padding:10px 16px;min-height:44px;border-radius:8px;border:1px solid #ccd
     <h1>Make words</h1>
     <div>Put up to 8 letters into the tray.</div>
   </div>
-  <div><select id="timeSelect" aria-label="Game time"><option value="60">1 minute</option><option value="120">2 minutes</option><option value="180">3 minutes</option></select> <div id="timer">60</div> <button id="goBtn" type="button">Go</button></div>
+  <div class="game-controls">
+    <select id="timeSelect" aria-label="Game time">
+      <option value="60">1 minute</option>
+      <option value="120">2 minutes</option>
+      <option value="180">3 minutes</option>
+    </select>
+    <div id="timer" aria-label="Time remaining">60</div>
+    <button id="goBtn" type="button">Go</button>
+  </div>
 </div>
 
 <p><span class="score">Score: <span id="score">0</span></span></p>
