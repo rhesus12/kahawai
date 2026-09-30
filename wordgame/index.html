@@ -17,7 +17,7 @@ body{font-family:Arial,sans-serif;max-width:760px;margin:30px auto;padding:0 16p
 h1{font-size:24px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
 .game-controls{display:flex;align-items:center;gap:8px;white-space:nowrap}
 #timer{font-size:28px;font-weight:bold;min-width:34px;text-align:center}.score{font-weight:bold}
-.rack,.tray{display:flex;flex-wrap:wrap;gap:5px;min-height:58px;align-items:center}
+.rack,.tray{display:flex;flex-wrap:nowrap;gap:5px;min-height:58px;align-items:center;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
 .tile{width:40px;height:46px;background:#f5ead3;border:1px solid #c7cdd6;border-radius:7px;display:flex;align-items:center;justify-content:center;position:relative;font-size:22px;font-weight:bold;cursor:grab;user-select:none;flex:0 0 auto}
 .tile small{position:absolute;right:3px;bottom:2px;font-size:8px;color:#5b5142}
 .tray .tile{width:36px;height:42px;font-size:20px}.tray .tile small{right:2px;bottom:1px;font-size:8px}
@@ -27,9 +27,9 @@ h1{font-size:24px}.top{display:flex;justify-content:space-between;align-items:fl
   h1{font-size:21px}
   .top{flex-direction:column;gap:8px}
   .game-controls{width:100%;justify-content:flex-start}
-  .rack,.tray{gap:3px;min-height:50px}
-  .tile{width:32px;height:38px;border-radius:6px;font-size:18px}
-  .tray .tile{width:30px;height:36px;font-size:17px}
+  .rack,.tray{gap:2px;min-height:50px;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden}
+  .tile{width:34px;height:42px;border-radius:6px;font-size:19px}
+  .tray .tile{width:32px;height:40px;font-size:18px}
   .tile small,.tray .tile small{right:2px;bottom:1px;font-size:7px}
 }
 button{padding:10px 16px;min-height:44px;border-radius:8px;border:1px solid #ccd3dd;background:white;font-weight:bold;cursor:pointer}
