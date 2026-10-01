@@ -1,1 +1,254 @@
 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Build the Sentence</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#222}
+.container{max-width:760px;margin:auto;padding:18px}
+h1{text-align:center;margin:8px 0 4px;font-size:30px}
+.subtitle{text-align:center;color:#666;margin-bottom:18px}
+.top{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+select,button{font:inherit}
+select{padding:10px 12px;border:1px solid #bbb;border-radius:8px;background:white}
+.score{font-weight:bold;font-size:18px}
+.card{background:white;border-radius:14px;padding:20px;box-shadow:0 2px 10px #00000012}
+.instruction{text-align:center;font-size:18px;margin-bottom:15px}
+.words{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:58px}
+.word{border:1px solid #aaa;background:#fff;border-radius:9px;padding:12px 15px;cursor:pointer;font-weight:bold;font-size:17px}
+.word:hover{background:#f0f0f0}
+.word.used{opacity:.35;cursor:default}
+.answer{min-height:70px;border:2px dashed #bbb;border-radius:10px;padding:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;margin:16px 0}
+.answer.empty{color:#999}
+.answer .chosen{background:#e8f5e9;border:1px solid #9ccc9c;border-radius:8px;padding:10px 13px;cursor:pointer}
+.actions{text-align:center}
+.mainbtn{background:#333;color:white;border:0;border-radius:9px;padding:12px 25px;cursor:pointer;font-weight:bold}
+.mainbtn:disabled{opacity:.45;cursor:default}
+.feedback{text-align:center;min-height:34px;margin-top:14px;font-size:18px;font-weight:bold}
+.correct{color:#18752b}.wrong{color:#b3261e}
+.next{display:none;margin:10px auto 0}
+.hint{display:block;margin:14px auto 0;background:#eee;color:#333}.getanswer{display:none;margin:10px auto 0;background:#f28c28;color:white;border:0;border-radius:9px;padding:12px 25px;cursor:pointer;font-weight:bold}
+.progress{text-align:center;color:#666;margin-top:14px;font-size:14px}
+@media(max-width:520px){
+ .container{padding:10px}
+ h1{font-size:26px}
+ .card{padding:14px}
+ .word{font-size:16px;padding:11px 12px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Build the Sentence</h1>
+<div class="subtitle">Tap the words in the correct order.</div>
+
+<div class="top">
+<select id="level">
+<option value="easy">Easy</option>
+<option value="medium">Medium</option>
+<option value="hard">Hard</option>
+</select>
+<div class="score">Score: <span id="score">0</span></div>
+</div>
+
+<div class="card">
+<div id="instruction" class="instruction">Ready?</div>
+<button id="startBtn" class="mainbtn" style="display:block;margin:0 auto 16px">Start</button>
+<div id="words" class="words"></div>
+
+<div id="answer" class="answer empty">Your sentence will appear here</div>
+
+<div class="actions">
+<button id="check" class="mainbtn" disabled>Check</button>
+
+</div>
+
+<div id="feedback" class="feedback"></div>
+<button id="tryAgain" class="mainbtn next">Try again</button>
+<button id="getAnswer" class="getanswer">Get answer</button>
+<button id="next" class="mainbtn next">Next sentence</button>
+<div id="progress" class="progress"></div><div id="results" style="display:none;margin-top:20px;text-align:left"></div>
+</div>
+</div>
+
+
+<script>
+const startBtn=document.getElementById("startBtn");
+const sentences={
+easy:[["I","live","in","Wellington."],["She","likes","coffee."],["Peter","plays","football."],["We","go","to","school."],["They","are","at","home."],["He","works","every","day."],["I","like","reading","books."],["Anna","is","a","teacher."],["We","have","two","children."],["The","bus","is","late."],["John","is","at","work."],["Mary","likes","music."],["I","drink","water."],["She","eats","rice."],["They","live","in","New","Zealand."],["He","drives","a","car."],["We","walk","to","the","park."],["Peter","has","a","dog."],["Susan","has","a","cat."],["The","weather","is","good."],["I","am","tired."],["She","is","happy."],["They","are","busy."],["We","are","ready."],["He","is","young."],["My","brother","is","tall."],["My","sister","is","kind."],["The","house","is","small."],["The","room","is","clean."],["I","cook","dinner."],["She","reads","the","news."],["He","plays","tennis."],["We","watch","TV."],["They","study","English."],["Anna","works","in","Wellington."],["Peter","walks","to","work."],["Mary","cooks","at","home."],["I","need","a","pen."],["She","wants","some","water."],["He","has","a","new","phone."],["We","need","more","time."],["They","want","a","coffee."],["The","shop","is","open."],["The","library","is","closed."],["My","bag","is","under","the","table."],["The","book","is","on","the","desk."],["The","keys","are","in","my","bag."],["I","go","home","at","five."],["She","starts","work","at","nine."],["We","eat","lunch","at","one."],["He","gets","up","at","seven."],["Do","you","like","coffee?"],["Do","you","live","in","Wellington?"],["Does","she","work","here?"],["Does","he","play","football?"],["Are","you","ready?"],["Is","she","at","home?"],["Is","the","shop","open?"],["Are","they","busy?"],["What","is","your","name?"],["Where","do","you","live?"],["Where","is","the","bus?"],["What","do","you","do?"],["When","do","you","work?"],["Who","is","your","teacher?"],["How","are","you?"],["How","old","are","you?"],["What","time","is","it?"],["Where","is","my","phone?"],["Do","you","have","a","car?"],["Does","Peter","like","tea?"],["Can","you","swim?"],["Can","she","drive?"],["Can","they","come?"],["Can","I","sit","here?"],["I","can","swim."],["She","can","cook."],["He","can","drive."],["We","can","help."],["They","can","speak","English."],["I","cannot","come","today."],["She","cannot","drive."],["He","cannot","swim."],["We","do","not","work","on","Sunday."],["They","do","not","live","here."],["I","do","not","like","tea."],["She","does","not","eat","meat."],["He","does","not","drink","coffee."],["Peter","does","not","play","tennis."],["The","children","are","at","school."],["My","parents","live","nearby."],["Where","does","she","work?"],["What","do","you","eat","for","lunch?"],["Can","he","play","tennis?"],["Can","you","cook?"],["Are","you","busy","today?"],["Is","your","house","nearby?"],["Do","they","like","music?"],["Does","Anna","live","here?"],["Do","you","work","every","day?"],
+["I","can","swim","very","well."],["She","can","speak","English."],["We","can","meet","tomorrow."],["They","can","help","us."],
+["I","can't","drive","at","night."],["He","can't","come","today."],["Can","you","cook","dinner?"],["Can","she","play","tennis?"],
+["I","have","a","new","bag."],["She","has","two","brothers."],["We","have","a","big","house."],["He","has","a","car."],
+["I","don't","have","a","car."],["She","doesn't","have","a","job."],["Do","you","have","a","brother?"],["Does","he","have","a","dog?"]],
+medium:[["I","usually","walk","to","work","because","it","is","close","to","my","house."],["She","often","reads","English","books","on","the","bus","to","work."],["Peter","usually","plays","football","with","his","friends","every","Saturday","afternoon."],["We","usually","have","dinner","together","at","home","in","the","evening."],["They","currently","live","in","Wellington","and","work","near","the","city","centre."],["My","brother","usually","drives","to","work","because","he","lives","quite","far","away."],["Susan","usually","works","at","a","hospital","and","starts","work","at","eight."],["I","usually","drink","coffee","before","I","go","to","work","every","morning."],["She","usually","takes","the","bus","when","the","weather","is","bad."],["We","often","visit","our","friends","at","the","weekend","after","work."],["He","often","plays","tennis","twice","a","week","at","the","local","club."],["They","usually","cook","dinner","together","at","home","on","Friday","evenings."],["Anna","really","studies","English","every","night","because","she","wants","to","improve."],["I","sometimes","walk","home","after","work","when","the","weather","is","fine."],["My","parents","usually","visit","us","for","lunch","on","Sunday","afternoons."],["The","bus","usually","leaves","at","seven","and","arrives","in","town","at","eight."],["The","shop","usually","opens","at","nine","and","closes","at","five","every","day."],["We","always","eat","breakfast","before","we","leave","the","house","in","the","morning."],["He","often","helps","his","children","with","their","homework","after","dinner."],["She","never","drives","to","work","because","the","train","is","faster."],["Do","you","usually","walk","to","work","or","take","the","bus?"],["Does","Peter","play","football","with","his","friends","every","weekend?"],["Where","does","your","sister","work","during","the","week?"],["What","do","you","usually","do","after","work","in","the","evening?"],["How","often","do","you","visit","your","family","at","the","weekend?"],["Does","she","usually","cook","dinner","for","the","family","at","home?"],["Why","does","he","walk","to","work","every","morning?"],["What","time","does","the","shop","open","on","Saturday","morning?"],["Do","they","usually","eat","lunch","together","at","work","every","day?"],["Where","does","Anna","study","English","after","work","each","day?"],["I","am","still","studying","English","at","home","this","evening","because","I","have","a","test."],["She","is","working","late","today","because","her","manager","needs","some","help."],["Peter","is","currently","playing","football","with","his","friends","at","the","park","now."],["We","are","still","waiting","for","the","bus","outside","the","station","right","now."],["They","are","having","dinner","at","a","restaurant","near","the","harbour","tonight."],["He","is","quietly","watching","a","film","with","his","family","in","the","living","room."],["I","am","writing","an","email","to","my","teacher","at","the","moment."],["She","is","reading","a","book","while","her","children","are","playing","outside."],["We","are","cleaning","the","house","because","our","friends","are","coming","tomorrow."],["The","children","are","playing","in","the","garden","while","their","parents","are","cooking."],["My","brother","is","looking","for","his","keys","in","the","kitchen","now."],["They","are","building","a","new","house","near","our","street","this","year."],["I","am","waiting","for","my","friend","outside","the","cafe","at","the","moment."],["She","is","talking","to","her","doctor","about","her","appointment","right","now."],["We","are","learning","new","words","in","English","class","this","morning."],["He","is","driving","to","work","because","the","weather","is","getting","worse."],["The","students","are","doing","an","English","exercise","in","class","right","now."],["I","am","making","dinner","while","my","wife","is","setting","the","table."],["They","are","waiting","for","their","friends","outside","the","cinema","tonight."],["She","is","wearing","a","new","jacket","because","it","is","cold","today."],["Are","you","studying","English","at","home","this","evening?"],["Is","she","working","late","at","the","office","tonight?"],["What","are","you","doing","in","the","kitchen","right","now?"],["Where","are","they","waiting","for","the","bus","this","morning?"],["Why","is","Peter","running","to","the","station","now?"],["Are","the","children","playing","outside","at","the","moment?"],["What","is","your","brother","doing","after","work","today?"],["Who","are","you","talking","to","on","the","phone?"],["Is","your","teacher","speaking","to","the","students","now?"],["What","are","they","doing","at","the","park","this","afternoon?"],["I","will","probably","visit","my","parents","next","week","because","I","have","some","free","time."],["She","will","call","you","after","she","finishes","work","at","five","tomorrow."],["We","will","probably","meet","our","friends","at","the","station","on","Saturday","morning."],["They","will","probably","travel","to","Auckland","next","month","for","a","family","holiday."],["He","will","start","his","new","job","next","Monday","at","eight","o'clock."],["I","will","send","you","the","information","when","I","get","home","tonight."],["She","will","cook","dinner","for","everyone","after","she","comes","home."],["We","will","go","to","the","beach","if","the","weather","is","good","tomorrow."],["They","will","stay","at","home","because","the","weather","may","be","bad."],["Peter","will","buy","a","new","phone","when","he","gets","paid."],["I","will","help","you","with","your","homework","after","dinner","tonight."],["She","will","take","the","train","to","Auckland","next","Friday","morning."],["We","will","have","a","meeting","at","ten","o'clock","tomorrow","morning."],["He","will","probably","arrive","late","because","the","traffic","is","busy."],["They","will","move","to","a","new","house","next","year","with","their","children."],["I","will","finish","this","work","before","I","go","home","today."],["Will","you","visit","your","family","in","Wellington","next","weekend?"],["Will","she","come","to","the","meeting","tomorrow","morning?"],["What","will","you","do","after","you","finish","work","today?"],["Where","will","they","stay","when","they","visit","Auckland","next","month?"],["When","will","Peter","start","his","new","job","at","the","hospital?"],["Will","you","call","me","when","you","arrive","at","the","station?"],["What","time","will","the","bus","leave","tomorrow","morning?"],["Will","your","friends","come","to","dinner","on","Saturday","night?"],["Where","will","you","go","if","the","weather","is","good","tomorrow?"],["Will","she","cook","dinner","for","the","family","tonight?"],["When","will","they","return","from","their","holiday","in","Auckland?"],["Will","he","drive","to","work","next","Monday","morning?"],["What","will","you","buy","when","you","go","to","the","supermarket?"],["Will","we","meet","outside","the","library","after","class","tomorrow?"],["I","went","to","the","supermarket","to","buy","some","food","quite","late","after","work","yesterday."],["She","visited","her","parents","and","had","a","really","nice","lunch","with","them","last","Sunday."],["Peter","played","football","with","his","friends","at","the","park","yesterday."],["We","watched","a","film","together","at","home","last","Saturday","night."],["They","went","to","Auckland","for","a","family","holiday","last","week."],["He","finished","work","late","and","went","home","by","bus","last","night."],["I","called","my","friend","after","dinner","because","I","needed","some","help."],["She","bought","a","new","jacket","when","she","went","shopping","yesterday."],["We","visited","the","museum","and","learned","about","New","Zealand","on","Saturday."],["They","played","tennis","after","work","because","the","weather","was","beautiful."],["I","can","usually","finish","this","work","before","lunch."],["She","can","speak","English","quite","well","at","work."],["We","can","meet","after","work","tomorrow","evening."],["They","can","help","us","with","the","project","today."],["I","can't","drive","very","far","when","the","weather","is","bad."],["He","can't","come","to","the","meeting","this","afternoon."],["Can","you","usually","cook","dinner","for","your","family?"],["Can","she","speak","English","with","her","customers?"],["I","have","a","new","phone","that","I","bought","last","week."],["She","has","two","children","who","live","with","her."],["We","have","a","large","house","near","the","city","centre."],["He","has","a","car","that","he","uses","for","work."],["I","don't","have","much","time","before","I","go","to","work."],["She","doesn't","have","a","car","because","she","takes","the","bus."],["Do","you","have","enough","time","to","finish","this","today?"],["Does","he","have","a","meeting","after","lunch","today?"]],
+hard:[["I","usually","get","to","work","early","because","the","bus","is","quiet."],["She","often","gets","home","late","because","she","works","in","the","city."],["Peter","usually","gets","up","early","when","he","has","work."],["We","often","get","tired","after","a","long","day","at","work."],["They","usually","get","the","bus","to","work","in","the","morning."],["I","sometimes","get","coffee","before","I","go","to","work."],["He","often","gets","hungry","after","playing","football","with","his","friends."],["She","usually","gets","home","at","about","six","o'clock."],["We","sometimes","get","together","with","our","friends","on","Friday","nights."],["I","usually","get","a","good","night's","sleep","before","a","busy","day."],["Peter","often","gets","the","train","because","it","is","faster."],["My","sister","usually","gets","ready","for","work","at","seven."],["They","sometimes","get","lunch","from","the","cafe","near","the","office."],["I","often","get","home","before","my","children","after","work."],["She","usually","gets","good","marks","because","she","studies","carefully."],["We","often","get","rain","in","Wellington","during","the","winter."],["He","sometimes","gets","nervous","before","an","important","meeting."],["I","usually","get","the","same","bus","every","morning."],["They","often","get","busy","at","work","before","the","weekend."],["She","usually","gets","better","after","a","good","night's","sleep."],["I","am","usually","getting","ready","for","work","at","this","time."],["She","is","currently","getting","ready","for","her","meeting."],["Peter","is","getting","the","bus","to","work","right","now."],["We","are","getting","ready","for","dinner","at","the","moment."],["They","are","getting","tired","because","they","are","walking","a","long","way."],["I","am","getting","some","coffee","before","the","class","starts."],["She","is","getting","better","after","her","long","week."],["He","is","getting","his","children","ready","for","school."],["We","are","getting","closer","to","the","station","now."],["They","are","getting","some","food","from","the","market","this","morning."],["I","am","getting","used","to","the","new","bus","route."],["She","is","getting","her","work","finished","before","lunch."],["Peter","is","getting","ready","to","leave","the","office","now."],["We","are","getting","some","help","from","our","teacher","today."],["They","are","getting","more","comfortable","with","English","each","week."],["I","am","getting","a","little","tired","after","the","long","meeting."],["He","is","getting","the","children","some","breakfast","right","now."],["She","is","getting","better","at","speaking","English","these","days."],["We","are","getting","ready","for","our","friends","to","arrive."],["They","are","getting","home","quite","late","this","evening."],["I","will","get","home","quite","late","after","work","tomorrow."],["She","will","get","the","bus","to","work","in","the","morning."],["Peter","will","get","a","new","phone","when","he","gets","paid."],["We","will","get","together","with","our","friends","next","Saturday."],["They","will","get","home","after","the","football","game","tomorrow."],["I","will","get","some","food","before","I","go","home."],["She","will","get","ready","for","the","meeting","after","lunch."],["He","will","get","some","help","from","his","teacher","tomorrow."],["We","will","get","to","the","station","quite","early","tomorrow."],["They","will","get","a","taxi","if","the","bus","is","late."],["I","will","get","some","coffee","before","the","class","starts."],["Peter","will","get","home","after","work","around","seven","tomorrow."],["She","will","get","better","with","more","practice","over","time."],["We","will","get","the","shopping","done","before","our","friends","arrive."],["They","will","get","very","busy","before","the","holiday","starts."],["I","will","get","back","home","after","the","meeting","finishes."],["He","will","get","a","better","job","when","his","English","improves."],["She","will","get","some","fresh","fruit","from","the","market","tomorrow."],["We","will","get","there","early","if","we","leave","now."],["They","will","get","a","little","tired","after","the","long","journey."],["I","got","home","quite","late","after","work","yesterday."],["She","got","the","bus","to","work","early","yesterday","morning."],["Peter","got","a","new","phone","because","his","old","one","broke","last","week."],["We","got","together","with","some","friends","last","Saturday","evening."],["They","got","home","very","late","after","the","football","game."],["I","got","some","coffee","before","I","went","to","work","yesterday."],["She","got","ready","for","the","meeting","quite","quickly","yesterday."],["He","got","some","help","from","his","teacher","after","class."],["We","got","to","the","station","early","and","waited","for","the","train."],["They","got","a","taxi","because","the","bus","was","very","late."],["I","got","some","food","from","the","market","after","work."],["Peter","got","home","after","a","busy","day","around","seven."],["She","got","better","after","she","had","a","good","night's","sleep."],["We","got","the","shopping","done","before","our","friends","arrived."],["They","got","very","busy","before","the","Christmas","holiday","last","year."],["I","got","back","home","after","the","meeting","finished."],["He","got","a","better","job","after","he","finished","his","course."],["She","got","some","fresh","fruit","from","the","market","yesterday."],["We","got","there","early","because","we","left","home","at","six."],["They","got","a","little","tired","after","walking","around","the","city."],["Did","you","get","home","quite","late","after","work","yesterday?"],["Did","she","get","the","bus","to","work","this","morning?"],["Did","Peter","get","a","new","phone","last","week?"],["Did","they","get","home","before","the","rain","started?"],["What","time","did","you","get","home","last","night?"],["Where","did","she","get","that","beautiful","jacket","from","the","shop","yesterday?"],["Why","did","he","get","so","tired","after","work","yesterday?"],["When","did","you","get","back","from","Auckland","after","your","holiday?"],["How","did","they","get","to","the","airport","yesterday?"],["Did","you","get","some","food","before","the","film","started?"],["Will","you","get","home","before","eight","tomorrow","night?"],["Will","she","get","the","train","or","the","bus","tomorrow?"],["When","will","Peter","get","his","new","phone","from","the","shop?"],["Will","they","get","there","before","the","meeting","starts?"],["How","will","you","get","home","after","the","concert?"],["Are","you","getting","ready","for","work","right","now?"],["Is","she","getting","the","bus","to","work","today?"],["Why","are","they","getting","home","so","late","tonight?"],["What","are","you","getting","from","the","supermarket","today?"],["Are","we","getting","close","to","the","station","now?"]]
+};
+
+let currentSet=[],current=0,selected=[],score=0,checked=false;
+const wordsEl=document.getElementById("words"),answerEl=document.getElementById("answer"),
+feedbackEl=document.getElementById("feedback"),checkBtn=document.getElementById("check"),
+nextBtn=document.getElementById("next"),tryAgainBtn=document.getElementById("tryAgain"),
+getAnswerBtn=document.getElementById("getAnswer"),
+levelEl=document.getElementById("level"),
+resultsEl=document.getElementById("results"),instructionEl=document.getElementById("instruction");
+
+function shuffle(a){let x=[...a];for(let i=x.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+
+function sentenceTokens(sentence){
+ let tokens=[...sentence];
+ let last=tokens[tokens.length-1];
+ if(last && /^.+[.?!]$/.test(last)){
+   tokens[tokens.length-1]=last.slice(0,-1);
+   tokens.push(last.slice(-1));
+ }
+ return tokens;
+}
+
+function buildSentence(tokens){
+ return tokens.join(" ").replace(/\s+([.!?])/g,"$1");
+}
+
+function loadSet(){
+ startBtn.style.display="none";
+ currentSet=shuffle(sentences[levelEl.value]).slice(0,5);
+ current=0;score=0;document.getElementById("score").textContent=score;
+ resultsEl.style.display="none";resultsEl.innerHTML="";resultsEl.style.marginTop="20px";
+ startBtn.style.display="none";wordsEl.style.display="flex";feedbackEl.style.display="block";document.getElementById("progress").style.display="block";
+ instructionEl.style.display="";
+ answerEl.style.display="";checkBtn.style.display="";
+ loadSentence();
+}
+
+// Start page: no word tiles are shown until the student starts.
+instructionEl.textContent="Ready?";
+instructionEl.style.color="#666";
+instructionEl.style.fontStyle="italic";
+wordsEl.innerHTML="";
+answerEl.style.display="none";
+checkBtn.style.display="none";
+startBtn.onclick=()=>{
+ instructionEl.style.color="";
+ instructionEl.style.fontStyle="";
+ answerEl.style.display="";
+ checkBtn.style.display="";
+ loadSet();
+};
+
+function loadSentence(){
+ selected=[];checked=false;attempts=0;feedbackEl.textContent="";feedbackEl.className="feedback";
+ nextBtn.style.display="none";tryAgainBtn.style.display="none";getAnswerBtn.style.display="none";checkBtn.disabled=true;
+ answerEl.className="answer empty";answerEl.textContent="Your sentence will appear here";
+ wordsEl.innerHTML="";
+ shuffle(sentenceTokens(currentSet[current])).forEach((word,i)=>{
+  const b=document.createElement("button");b.className="word";b.textContent=word;b.dataset.i=i;
+  b.onclick=()=>choose(b,word);wordsEl.appendChild(b);
+ });
+ document.getElementById("progress").textContent=`Question ${current+1} of 5`;
+}
+
+function choose(btn,word){
+ if(checked||btn.classList.contains("used"))return;
+ btn.classList.add("used");selected.push({word,btn});renderAnswer();checkBtn.disabled=false;
+}
+
+function renderAnswer(){
+ answerEl.innerHTML="";answerEl.className="answer"+(selected.length?"":" empty");
+ if(!selected.length){answerEl.textContent="Your sentence will appear here";return}
+ selected.forEach((item,index)=>{
+  const s=document.createElement("span");s.className="chosen";s.textContent=item.word;s.title="Tap to remove";
+  s.onclick=()=>{if(checked)return;item.btn.classList.remove("used");selected.splice(index,1);renderAnswer();checkBtn.disabled=!selected.length};
+  answerEl.appendChild(s);
+ });
+}
+
+checkBtn.onclick=()=>{
+ if(checked)return;
+ attempts++;
+ checked=true;
+ const target=buildSentence(sentenceTokens(currentSet[current])),answer=buildSentence(selected.map(x=>x.word));
+ if(answer===target){
+  score++;document.getElementById("score").textContent=score;
+  feedbackEl.textContent="✓ Correct! +1";feedbackEl.className="feedback correct";
+  nextBtn.textContent = (current === currentSet.length - 1) ? "Results" : "Next sentence";
+  nextBtn.style.display="block";
+ }else{
+  feedbackEl.textContent="Not quite. Try again.";feedbackEl.className="feedback wrong";
+  tryAgainBtn.style.display="block";
+  if(attempts===3){
+   const tokens=sentenceTokens(currentSet[current]);
+   const hintCount=Math.ceil(tokens.length/2);
+   const hint=tokens.slice(0,hintCount).join(" ");
+   feedbackEl.textContent="Not quite. Hint: "+hint;
+  }
+  if(attempts>=4){
+   getAnswerBtn.style.display="block";
+  }
+ }
+ checkBtn.disabled=true;
+};
+
+tryAgainBtn.onclick=()=>{
+ checked=false;selected=[];feedbackEl.textContent="";feedbackEl.className="feedback";
+ tryAgainBtn.style.display="none";nextBtn.style.display="none";checkBtn.disabled=true;
+ answerEl.className="answer empty";answerEl.textContent="Your sentence will appear here";
+ wordsEl.querySelectorAll(".word").forEach(b=>b.classList.remove("used"));
+};
+
+
+
+getAnswerBtn.onclick=()=>{
+ const answer=buildSentence(sentenceTokens(currentSet[current]));
+ answerEl.className="answer";
+ answerEl.textContent=answer;
+ feedbackEl.textContent="";
+ feedbackEl.className="feedback";
+ getAnswerBtn.style.display="none";
+ tryAgainBtn.style.display="none";
+ nextBtn.textContent = (current === currentSet.length - 1) ? "Results" : "Next sentence";
+ nextBtn.style.display="block";
+};
+
+
+nextBtn.onclick=()=>{
+ current++;
+ if(current>=currentSet.length){showResults();return}
+ loadSentence();
+};
+
+function showResults(){
+ instructionEl.style.display="none";
+ startBtn.style.display="none";
+ wordsEl.innerHTML="";wordsEl.style.display="none";
+ answerEl.style.display="none";checkBtn.style.display="none";
+ tryAgainBtn.style.display="none";getAnswerBtn.style.display="none";nextBtn.style.display="none";
+ feedbackEl.textContent="";feedbackEl.style.display="none";
+ document.getElementById("progress").textContent="";document.getElementById("progress").style.display="none";
+ resultsEl.style.marginTop="0";
+ let html="<h2 style='text-align:center;margin-top:0'>You got "+score+" right on the first try.</h2>";
+ html+="<h3>Correct answer sentences</h3><ol>";
+ currentSet.forEach(s=>html+="<li style='margin:8px 0'>"+buildSentence(sentenceTokens(s))+"</li>");
+ html+="</ol><div style='text-align:center;margin-top:18px'><button class='mainbtn' id='playAgain'>Play again</button></div>";
+ resultsEl.innerHTML=html;resultsEl.style.display="block";
+ document.getElementById("playAgain").onclick=loadSet;
+}
+
+levelEl.onchange=()=>{
+  // Keep the start screen clean when changing level.
+  startBtn.style.display="block";
+  instructionEl.textContent="Ready?";
+  instructionEl.style.color="#666";
+  instructionEl.style.fontStyle="italic";
+  wordsEl.innerHTML="";
+  answerEl.style.display="none";
+  checkBtn.style.display="none";
+  resultsEl.style.display="none";
+  document.getElementById("progress").textContent="";
+};
+</script>
+</body>
+</html>
