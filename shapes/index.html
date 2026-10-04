@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -65,8 +64,13 @@ input.onkeydown=function(e){if(e.key==='Enter')check();};
 }
 function check(){
 var name=order[pos],input=document.getElementById('answer'),feedback=document.getElementById('feedback');
-if(correct(input.value,name)){score++;feedback.innerHTML='✓ Correct!'+hear(name);setTimeout(next,1200);}
-else{feedback.textContent='Not quite. Try again, or click “I don’t know”.';input.focus();}
+if(correct(input.value,name)){
+score++;
+feedback.innerHTML='✓ Correct!'+hear(name)+'<br><button id="next" class="primary" type="button">Next</button>';
+document.getElementById('check').style.display='none';
+document.getElementById('unknown').style.display='none';
+document.getElementById('next').onclick=next;
+}else{feedback.textContent='Not quite. Try again, or click “I don’t know”.';input.focus();}
 }
 function showAnswer(){
 var name=order[pos],input=document.getElementById('answer'),feedback=document.getElementById('feedback');
@@ -75,8 +79,12 @@ input.value='';input.focus();
 var button=document.getElementById('check');
 button.textContent='Check name';
 button.onclick=function(){
-if(correct(input.value,name)){feedback.innerHTML='✓ Correct!'+hear(name);setTimeout(next,1200);}
-else{feedback.innerHTML='Please type <strong>'+name+'</strong>.'+hear(name);input.focus();}
+if(correct(input.value,name)){
+feedback.innerHTML='✓ Correct!'+hear(name)+'<br><button id="next" class="primary" type="button">Next</button>';
+document.getElementById('check').style.display='none';
+document.getElementById('unknown').style.display='none';
+document.getElementById('next').onclick=next;
+}else{feedback.innerHTML='Please type <strong>'+name+'</strong>.'+hear(name);input.focus();}
 };
 }
 function next(){
