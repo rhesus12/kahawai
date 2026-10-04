@@ -1,1 +1,94 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shape Names – English Practice</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:760px;margin:30px auto;padding:0 20px;color:#222}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.small{font-size:14px;color:#666}
+.card{min-height:500px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+.picture{width:min(440px,92vw);height:320px;background:#f7f7f7;border:1px solid #ccc;border-radius:10px;display:flex;align-items:center;justify-content:center}
+svg{width:390px;height:290px}
+.shape{fill:#cfe3f1;stroke:#222;stroke-width:5;stroke-linejoin:round}
+.line{stroke:#222;stroke-width:5}
+input{width:min(360px,90%);padding:12px;font-size:20px;text-align:center;border:1px solid #999;border-radius:7px}
+button{padding:10px 20px;min-height:44px;border:1px solid #888;border-radius:7px;background:white;font-weight:600;cursor:pointer}
+.primary{background:#e5edf4}
+.feedback{min-height:42px;text-align:center;font-size:18px;font-weight:600}
+.feedback a{display:block;margin-top:5px;font-size:15px;color:#333}
+.result{text-align:center;padding:40px 10px}
+</style>
+</head>
+<body>
+<div class="top">
+  <div><h1>Shape Names</h1><p class="small">Look at the shape and type its English name.</p></div>
+  <div id="progress" class="small"></div>
+</div>
+<div id="game"></div>
+<script>
+(function(){
+var shapes=['circle','heart','triangle','semicircle','oval','square','octagon','rectangle','kite'];
+var accepted={kite:['kite','diamond']};
+var order=shapes.slice().sort(function(){return Math.random()-0.5;});
+var pos=0,score=0,game=document.getElementById('game'),progress=document.getElementById('progress');
+
+function drawing(name){
+if(name==='circle')return '<circle class="shape" cx="200" cy="145" r="105"></circle>';
+if(name==='heart')return '<path class="shape" d="M200 255 L95 145 C45 95 70 40 125 40 C160 40 185 62 200 92 C215 62 240 40 275 40 C330 40 355 95 305 145 Z"></path>';
+if(name==='triangle')return '<polygon class="shape" points="200,25 335,265 65,265"></polygon>';
+if(name==='semicircle')return '<path class="shape" d="M65 180 A135 135 0 0 1 335 180 Z"></path><line class="line" x1="65" y1="180" x2="335" y2="180"></line>';
+if(name==='oval')return '<ellipse class="shape" cx="200" cy="145" rx="90" ry="120"></ellipse>';
+if(name==='square')return '<rect class="shape" x="75" y="20" width="250" height="250"></rect>';
+if(name==='octagon')return '<polygon class="shape" points="120,25 280,25 350,95 350,195 280,265 120,265 50,195 50,95"></polygon>';
+if(name==='rectangle')return '<rect class="shape" x="115" y="20" width="170" height="250"></rect>';
+return '<polygon class="shape" points="200,20 335,145 200,270 65,145"></polygon>';
+}
+function hear(name){
+return '<a href="https://dictionary.cambridge.org/pronunciation/english/'+encodeURIComponent(name)+'" target="_blank" rel="noopener">🔊 Hear the pronunciation of '+name+'</a>';
+}
+function correct(value,name){
+value=value.trim().toLowerCase();
+return value===name || (accepted[name]&&accepted[name].indexOf(value)>=0);
+}
+function render(){
+var name=order[pos];
+progress.textContent=(pos+1)+' / '+shapes.length;
+game.innerHTML='<div class="card"><div class="picture"><svg viewBox="0 0 400 290" role="img" aria-label="Shape">'+drawing(name)+'</svg></div><label for="answer"><strong>What is this shape?</strong></label><input id="answer" type="text" autocomplete="off" spellcheck="false"><div id="feedback" class="feedback" aria-live="polite"></div><div><button id="check" class="primary">Check</button> <button id="unknown">I don’t know</button></div><div class="small">If you need the answer, you must type it before continuing.</div></div>';
+var input=document.getElementById('answer');
+input.focus();
+document.getElementById('check').onclick=check;
+document.getElementById('unknown').onclick=showAnswer;
+input.onkeydown=function(e){if(e.key==='Enter')check();};
+}
+function check(){
+var name=order[pos],input=document.getElementById('answer'),feedback=document.getElementById('feedback');
+if(correct(input.value,name)){score++;feedback.innerHTML='✓ Correct!'+hear(name);setTimeout(next,1200);}
+else{feedback.textContent='Not quite. Try again, or click “I don’t know”.';input.focus();}
+}
+function showAnswer(){
+var name=order[pos],input=document.getElementById('answer'),feedback=document.getElementById('feedback');
+feedback.innerHTML='The answer is <strong>'+name+'</strong>.'+hear(name)+'<br><span class="small">Type the answer below to continue.</span>';
+input.value='';input.focus();
+var button=document.getElementById('check');
+button.textContent='Check name';
+button.onclick=function(){
+if(correct(input.value,name)){feedback.innerHTML='✓ Correct!'+hear(name);setTimeout(next,1200);}
+else{feedback.innerHTML='Please type <strong>'+name+'</strong>.'+hear(name);input.focus();}
+};
+}
+function next(){
+pos++;
+if(pos>=shapes.length){
+progress.textContent='Complete';
+game.innerHTML='<div class="result"><h2>Complete!</h2><p>First-try score: <strong>'+score+' / '+shapes.length+'</strong></p><p class="small">You practised all 9 shape names.</p><button id="again" class="primary">Play again</button></div>';
+document.getElementById('again').onclick=function(){order=shapes.slice().sort(function(){return Math.random()-0.5;});pos=0;score=0;render();};
+}else render();
+}
+render();
+})();
+</script>
+</body>
+</html>
